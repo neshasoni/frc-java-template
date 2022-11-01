@@ -18,15 +18,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
+
+
+
 public class DriveSubsystem extends SubsystemBase {
+  private final int TIMEOUT_MS = 10; 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {resetEncoders();
   leftFrontMotor.set(ControlMode.Follower, leftBackMotor.getDeviceID()); 
   rightFrontMotor.set(ControlMode.Follower, rightBackMotor.getDeviceID());
 
-  void com.ctre.phoenix.motorcontrol.can.WPI_TalonFX.set (ControlMode mode, double value)
+  
 
-  leftFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1)); 
+  leftFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1); 
   leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
   leftFrontMotor.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms); 
   leftFrontMotor.configVelocityMeasurementWindow(16); 
@@ -60,12 +64,47 @@ public class DriveSubsystem extends SubsystemBase {
   leftBackMotor.setInverted(false); 
   rightBackMotor.setInverted(true); 
 
-  }
+  leftFrontMotor.set(ControlMode.Follower, leftBackMotor.getDeviceID()); 
+  rightFrontMotor.set(ControlMode.Follower, rightBackMotor.getDeviceID()); 
+  leftFrontMotor.setNeutralMode(NeutralMode.Coast); 
+  rightFrontMotor.setNeutralMode(NeutralMode.Coast); 
+  
+  leftFrontMotor.configNominalOutputForward(0,TIMEOUT_MS); 
+  leftFrontMotor.configNominalOutputReverse(0,TIMEOUT_MS); 
+  leftFrontMotor.configNominalOutputForward(1,TIMEOUT_MS); 
+  leftFrontMotor.configNominalOutputReverse(-1,TIMEOUT_MS); 
+  
+  rightFrontMotor.configNominalOutputForward(0,TIMEOUT_MS); 
+  rightFrontMotor.configNominalOutputReverse(0,TIMEOUT_MS); 
+  rightFrontMotor.configNominalOutputForward(1,TIMEOUT_MS); 
+  rightFrontMotor.configNominalOutputReverse(-1,TIMEOUT_MS);
+  
+  leftFrontMotor.configNeutralDeadband(0.001, TIMEOUT_MS); 
+  leftBackMotor.configNeutralDeadband(0.001, TIMEOUT_MS); 
+  rightFrontMotor.configNeutralDeadband(0.001, TIMEOUT_MS); 
+  rightBackMotor.configNeutralDeadband(0.001, TIMEOUT_MS);
+
+  leftFrontMotor.setSensorPhase(true); 
+  rightFrontMotor.setSensorPhase(false); 
+  leftBackMotor.setSensorPhase(true); 
+  rightBackMotor.setSensorPhase(false); 
+
+  leftFrontMotor.setInverted(false); 
+  rightFrontMotor.setInverted(true); 
+  rightBackMotor.setInverted(true); 
+  leftBackMotor.setInverted(false); 
+    }
+
+  
+  
+
+
+
   public void resetEncoders() { 
-backLeftMotor.setSelectedSensorPosition(0); 
-backRightMotor.setSelectedSensorPosition(0);
-frontLeftMotor.setSelectedSensorPosition(0);
-frontRightMotor.setSelectedSensorPosition(0); 
+    leftBackMotor.setSelectedSensorPosition(0); 
+    rightBackMotor.setSelectedSensorPosition(0);
+  leftFrontMotor.setSelectedSensorPosition(0);
+  rightFrontMotor.setSelectedSensorPosition(0);  
   } 
   public static void drive(double throttle, double rotate){ 
     leftFrontMotor.set(throttle + rotate); 
@@ -148,12 +187,15 @@ private static final double METERS_PER_TICKS = 1 / TICKS_PER_METER;
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+
+public void setModePercentVoltage () { 
+  leftFrontMotor.set(ControlMode.PercentOutput, 0); 
+  rightFrontMotor.set(ControlMode.PercentOutput, 0); 
+  leftBackMotor.set(ControlMode.PercentOutput, 0); 
+  rightBackMotor.set(ControlMode.PercentOutput, 0); 
+  
 }
 
-public class JoystickDrive extends CommandBase {
-   
 
-  
-  }
-
-} 
+}

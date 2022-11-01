@@ -2,6 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -15,6 +16,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static RobotContainer m_robotContainer; 
+  private DriveSubsystem driveSubsystem = m_robotContainer.driveSubsystem; 
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -28,6 +32,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_robotContainer.driveSubsystem.setModePercentVoltage();
+    m_robotContainer.driveSubsystem.resetEncoders();
   }
 
   /**
