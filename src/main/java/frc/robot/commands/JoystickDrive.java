@@ -33,17 +33,17 @@ double rotate = driverController.getRightX();
 { if((throttle > 0 && throttle < 0.25) || (throttle < 0 && throttle > -0.25)) {
   throttle = 0; 
 } else { 
-  throttle = throttle;  
+  throttle = 0.25* throttle;  
 } 
-if((rotate > 0 && rotate < 0.25) || (rotate < 0 && rotate > -0.25) { 
+if((rotate > 0 && rotate < 0.25) || (rotate < 0 && rotate > -0.25)) { 
   rotate = 0; 
 } else { 
-  rotate = rotate; 
+  rotate = 0.25* rotate; 
 }
 
 }
 
-if (driverController.getRightTriggerAxis() > 0.25; {
+/*if (driverController.getRightTriggerAxis() > 0.25) {
   throttle = Math.signum(throttle) * 0.75; 
 }
 else if (driverController.getAButton()) { 
@@ -51,7 +51,10 @@ else if (driverController.getAButton()) {
 }
 else { 
   throttle = (throttle*0.8);
-}
+}*/
+
+// pass back throttle and rotate to driveSubsystem by calling the drive method
+  driveSubsystem.drive(throttle, rotate);
   }
 
   
