@@ -19,17 +19,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
-
-
   public static DriveSubsystem driveSubsystem = new DriveSubsystem();
-
   public static final XboxController driverController = new XboxController (0);
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-private final JoystickDrive drivetrain = new JoystickDrive(drivetrain);
+
+  private final JoystickDrive drivetrain = new JoystickDrive(driveSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings

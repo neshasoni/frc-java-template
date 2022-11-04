@@ -31,10 +31,9 @@ double throttle = driverController.getLeftY();
 double rotate = driverController.getRightX(); 
 
 { if((throttle > 0 && throttle < 0.25) || (throttle < 0 && throttle > -0.25)) {
-  throttle = 0; 
-} else { 
-  throttle = 0.25* throttle;  
-} 
+  throttle = 0; } 
+  else {throttle = 0.25* throttle;} 
+  
 if((rotate > 0 && rotate < 0.25) || (rotate < 0 && rotate > -0.25)) { 
   rotate = 0; 
 } else { 

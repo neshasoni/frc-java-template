@@ -22,9 +22,31 @@ import frc.robot.RobotMap;
 
 
 public class DriveSubsystem extends SubsystemBase {
+
+private static final WPI_TalonFX leftBackMotor = RobotMap.leftBackDriveMotor; 
+private static final WPI_TalonFX rightBackMotor = RobotMap.rightBackDriveMotor; 
+private static final WPI_TalonFX leftFrontMotor = RobotMap.leftFrontDriveMotor; 
+private static final WPI_TalonFX rightFrontMotor = RobotMap.rightFrontDriveMotor; 
+
+private static final double IN_TO_M = .0254; 
+private static final int MOTOR_ENCODER_CODES_PER_REV = 2048; 
+private static final double DIAMETER_INCHES = 5.0;
+private static final double WHEEL_DIAMETER = DIAMETER_INCHES *IN_TO_M;
+private static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI; 
+private static final double GEAR_RATIO = 12.75; 
+private static final double TICKS_PER_METER = (MOTOR_ENCODER_CODES_PER_REV * GEAR_RATIO) / (WHEEL_CIRCUMFERENCE);
+private static final double METERS_PER_TICKS = 1 / TICKS_PER_METER; 
   private final int TIMEOUT_MS = 10; 
+
+  public void setModePercentVoltage () { 
+    leftFrontMotor.set(ControlMode.PercentOutput, 0); 
+    rightFrontMotor.set(ControlMode.PercentOutput, 0); 
+    leftBackMotor.set(ControlMode.PercentOutput, 0); 
+    rightBackMotor.set(ControlMode.PercentOutput, 0); 
+    
+  }
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem() {resetEncoders();
+  public DriveSubsystem() {
   leftFrontMotor.set(ControlMode.Follower, leftBackMotor.getDeviceID()); 
   rightFrontMotor.set(ControlMode.Follower, rightBackMotor.getDeviceID());
 
@@ -63,11 +85,6 @@ public class DriveSubsystem extends SubsystemBase {
   rightFrontMotor.setInverted(true); 
   leftBackMotor.setInverted(false); 
   rightBackMotor.setInverted(true); 
-
-  leftFrontMotor.set(ControlMode.Follower, leftBackMotor.getDeviceID()); 
-  rightFrontMotor.set(ControlMode.Follower, rightBackMotor.getDeviceID()); 
-  leftFrontMotor.setNeutralMode(NeutralMode.Coast); 
-  rightFrontMotor.setNeutralMode(NeutralMode.Coast); 
   
   leftFrontMotor.configNominalOutputForward(0,TIMEOUT_MS); 
   leftFrontMotor.configNominalOutputReverse(0,TIMEOUT_MS); 
@@ -93,6 +110,8 @@ public class DriveSubsystem extends SubsystemBase {
   rightFrontMotor.setInverted(true); 
   rightBackMotor.setInverted(true); 
   leftBackMotor.setInverted(false); 
+
+  resetEncoders(); 
     }
 
   
@@ -170,32 +189,13 @@ public void stop() {
   drive (0, 0); 
 }
 
-private static final WPI_TalonFX leftBackMotor = RobotMap.leftBackDriveMotor; 
-private static final WPI_TalonFX rightBackMotor = RobotMap.rightBackDriveMotor; 
-private static final WPI_TalonFX leftFrontMotor = RobotMap.leftFrontDriveMotor; 
-private static final WPI_TalonFX rightFrontMotor = RobotMap.rightFrontDriveMotor; 
-
-private static final double IN_TO_M = .0254; 
-private static final int MOTOR_ENCODER_CODES_PER_REV = 2048; 
-private static final double DIAMETER_INCHES = 5.0;
-private static final double WHEEL_DIAMETER = DIAMETER_INCHES *IN_TO_M;
-private static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI; 
-private static final double GEAR_RATIO = 12.75; 
-private static final double TICKS_PER_METER = (MOTOR_ENCODER_CODES_PER_REV * GEAR_RATIO) / (WHEEL_CIRCUMFERENCE);
-private static final double METERS_PER_TICKS = 1 / TICKS_PER_METER; 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
 
-public void setModePercentVoltage () { 
-  leftFrontMotor.set(ControlMode.PercentOutput, 0); 
-  rightFrontMotor.set(ControlMode.PercentOutput, 0); 
-  leftBackMotor.set(ControlMode.PercentOutput, 0); 
-  rightBackMotor.set(ControlMode.PercentOutput, 0); 
-  
-}
+
 
 
 }
